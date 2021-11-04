@@ -35,24 +35,24 @@
 * How to Use?
 ** =recur-loop= / =recur-let=
    Recursively callable =let=.  Similar to =loop= in clojure.
-   This is same as =recur-progv=, except using BINDINGS like =let= instead of
-   SYMBOLS and INITVALUES.  BODY is evaluated with variables set by BINDINGS.
+   This is same as =recur-progv=, except using =BINDINGS= like =let= instead of
+   =SYMBOLS= and =INITVALUES=.  =BODY= is evaluated with variables set by =BINDINGS=.
 
    Note that =recur= MUST be tail recursion and this macro optimize tail call.
 
 ** =recur-progv=
    Recursively callable =cl-progv=.
-   SYMBOLS, INITVALUES (as VALUES), and BODY are same as arguments of =cl-progv=.
-   In addition, you can use function =recur= in BODY form.  This function take
-   arguments same number as length of SYMBOLS, and evaluate BODY form with SYMBOLS
+   =SYMBOLS=, =INITVALUES= (as =VALUES=), and =BODY= are same as arguments of =cl-progv=.
+   In addition, you can use function =recur= in =BODY= form.  This function take
+   arguments same number as length of =SYMBOLS=, and evaluate =BODY= form with =SYMBOLS=
    bounded by each value of arguments.
 
    Note that =recur= MUST be tail recursion and this macro optimize tail call.
 
 ** =recur-defun=
    Define function with tail call optimization.
-   NAME, ARGLIST, DOCSTRING and BODY is same as arguments of =defun=.
-   =recur= in BODY calls the function named NAME itself with arguments.
+   =NAME=, =ARGLIST=, =DOCSTRING= and =BODY= is same as arguments of =defun=.
+   =recur= in =BODY= calls the function named NAME itself with arguments.
    =recur= cannot recieve variable length arguments, so you must pass one list
    even as =&rest= argument.
 
