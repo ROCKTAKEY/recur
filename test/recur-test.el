@@ -26,6 +26,7 @@
 
 ;;; Code:
 
+(require 'cl-lib)
 (require 'ert)
 
 (require 'undercover)
@@ -34,7 +35,75 @@
             (:report-file "coverage-final.json")
             (:send-report nil))
 
+(require 'recur)
 
+(ert-deftest recur-progv ()
+  (should
+   (eq
+    (recur-progv '(x y) '(5 1)
+      (if (eq x 0)
+          y
+        (recur (1- x) (* x y))))
+    120)))
+
+(ert-deftest recur-loop ()
+  (should
+   (eq
+    (recur-loop
+        ((x 5)
+         (y 1))
+      (if (eq x 0)
+          y
+        (recur (1- x) (* x y))))
+    120)))
+
+(ert-deftest recur-defun-normal ()
+  (should
+   (eq
+    (let ((factorial (cl-gensym "factorial")))
+      (eval
+       `(recur-defun ,factorial (x y)
+          (if (eq x 0)
+              y
+            (recur (1- x) (* x y)))))
+      (funcall factorial 5 1))
+    120)))
+
+(ert-deftest recur-defun-optional ()
+  (should
+   (eq
+    (let ((factorial (cl-gensym "factorial")))
+      (eval
+       `(recur-defun ,factorial (x &optional y)
+          (setq y (or y 1))
+          (if (eq x 0)
+              y
+            (recur (1- x) (* x y)))))
+      (funcall factorial 5))
+    120)))
+
+(ert-deftest recur-defun-deep ()
+  (should-error
+   (let ((max-lisp-eval-depth 5)
+         (bad-factorial (cl-gensym "bad-factorial")))
+     (eval
+      `(defun ,bad-factorial (x &optional y)
+         (setq y (or y 1))
+         (if (eq x 0)
+             y
+           (,bad-factorial (1- x) (* x y)))))
+     (funcall bad-factorial 4000)))
+
+  ;; Should not error
+  (let ((max-lisp-eval-depth 5)
+        (factorial (cl-gensym "factorial")))
+    (eval
+     `(recur-defun ,factorial (x &optional y)
+        (setq y (or y 1))
+        (if (eq x 0)
+            y
+          (recur (1- x) (* x y)))))
+    (funcall factorial 4000)))
 
 (provide 'recur-test)
 ;;; recur-test.el ends here
