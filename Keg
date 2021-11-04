@@ -1,0 +1,6 @@
+(source gnu melpa)
+
+(package (recur
+          (recipe . (:fetcher github :repo "ROCKTAKEY/recur"))))
+
+(dev-dependency undercover)
