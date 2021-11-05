@@ -6,13 +6,11 @@ jobs:
   test:
     runs-on: ubuntu-latest
     continue-on-error:
-      ${{ contains(fromJson('["24.1", "24.2", "snapshot"]'), matrix.emacs_version) }}
+      ${{ contains(fromJson('["snapshot"]'), matrix.emacs_version) }}
     strategy:
       fail-fast: false
       matrix:
         emacs_version:
-          - '24.1'
-          - '24.2'
           - '24.3'
           - '24.4'
           - '24.5'
@@ -23,6 +21,7 @@ jobs:
           - '26.2'
           - '26.3'
           - '27.1'
+          - '27.2'
           - 'snapshot'
     steps:
       - uses: actions/checkout@v1
@@ -46,6 +45,6 @@ jobs:
       - uses: actions/checkout@v1
       - uses: purcell/setup-emacs@master
         with:
-          version: '27.1'
+          version: '27.2'
       - uses: conao3/setup-keg@master
       - run: make lint
