@@ -128,7 +128,7 @@ Note that `recur' MUST be tail recursion and this macro optimize tail call."
      ,@body))
 
 ;;;###autoload
-(defalias 'recur-let 'recur-loop)
+(defalias 'recur-let #'recur-loop)
 
 ;;;###autoload
 (defmacro recur-defun (name arglist &optional docstring &rest body)
