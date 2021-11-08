@@ -31,6 +31,17 @@
 
     (factorial 5)
     ;; => 120
+
+    (recur-defun sum (init &rest list)
+      (if list
+          (recur (+ init (car list))
+                 (cdr list))
+        init))
+    ;; => sum
+
+    (sum 1 2 3 4 5)
+    ;; 15
+
   #+end_src
 * How to Use?
 ** =recur-loop= / =recur-let=

@@ -82,6 +82,19 @@
       (funcall factorial 5))
     120)))
 
+(ert-deftest recur-defun-rest ()
+  (should
+   (eq
+    (let ((sum (cl-gensym "sum")))
+      (eval
+       `(recur-defun ,sum (init &rest list)
+          (if list
+              (recur (+ init (car list))
+                     (cdr list))
+            init)))
+      (funcall sum 1 2 3 4 5))
+    15)))
+
 (ert-deftest recur-defun-deep ()
   (should-error
    (let ((max-lisp-eval-depth 5)
