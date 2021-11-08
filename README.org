@@ -2,6 +2,7 @@
 [[file:LICENSE][https://img.shields.io/github/license/ROCKTAKEY/recur.svg?style=flat-square]]
 [[https://codecov.io/gh/ROCKTAKEY/recur?branch=master][https://img.shields.io/codecov/c/github/ROCKTAKEY/recur.svg?style=flat-square]]
 [[https://github.com/ROCKTAKEY/recur/actions][https://img.shields.io/github/workflow/status/ROCKTAKEY/recur/CI/master.svg?style=flat-square]]
+[[https://melpa.org/#/recur][file:https://melpa.org/packages/recur-badge.svg]]
 * Tail call optimization for Emacs.
   =recur= means recursive call (like clojure). All =recur= must be called on tail.
   #+begin_src emacs-lisp
